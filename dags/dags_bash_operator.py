@@ -21,7 +21,7 @@ with DAG(
     
     bash_t2 = BashOperator(
         task_id="bash_t2",
-        bash_command="echo $HOME",
+        bash_command="echo $HOMENAME",
     )
     
     bash_t1 >> bash_t2
