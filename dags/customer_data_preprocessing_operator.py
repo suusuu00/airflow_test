@@ -28,8 +28,8 @@ current_dir = os.path.dirname(__file__)
 top_dir = os.path.dirname(current_dir)
 
 # joblib 파일의 절대 경로 생성
-joblib_path = os.path.join(top_dir, 'models', 'preprocessing_pipeline.joblib')
-joblib_path2 = os.path.join(top_dir, 'models', 'preprocessing_pipeline_second_category.joblib')
+joblib_path = os.path.join('~', 'airflow', 'models', 'preprocessing_pipeline.joblib')
+joblib_path2 = os.path.join('~', 'airflow', 'models', 'preprocessing_pipeline_second_category.joblib')
 
 
 def process_file(**kwargs):
