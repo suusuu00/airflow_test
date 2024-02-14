@@ -4,16 +4,6 @@ import pandas as pd
 import numpy as np
 import os
 
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
-
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.preprocessing import FunctionTransformer
-from sklearn.preprocessing import MinMaxScaler
 import joblib
 
 from airflow.models.dag import DAG
@@ -51,13 +41,6 @@ def remove_id_column(X):
 def dropna_function(X):
     return X.dropna()
 
-def label_encode_column(X):
-
-    le = LabelEncoder()
-    X = pd.DataFrame(le.fit_transform(X), columns=X.columns)
-    
-    return X
-
 pipe = joblib.load(joblib_path)
 category_pipe = joblib.load(joblib_path2)
 
@@ -66,11 +49,10 @@ def preprocessing(**kwargs):
     new_df = kwargs['ti'].xcom_pull(task_ids='process_file_task', key='processed_dataframe')
     
     log_cols = ['Age', 'Work_Experience', 'Family_Size']
-    binary_cols = ['Gender', 'Ever_Married', 'Graduated']
 
     X_transformed = pd.DataFrame(pipe.transform(new_df))
     category_cols_name = category_pipe.get_feature_names_out()
-    X_transformed.columns = log_cols + binary_cols + list(category_cols_name)
+    X_transformed.columns = log_cols + list(category_cols_name)
     
     print(X_transformed)
 
